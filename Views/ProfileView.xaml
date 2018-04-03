@@ -1,0 +1,143 @@
+﻿<UserControl x:Class="DotaHackLoader.Views.ProfileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DotaHackLoader"
+             xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:converter="clr-namespace:DotaHackLoader.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="821.749" d:DesignWidth="826.514">
+    <UserControl.Resources>
+        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <converter:BoolToVisibilityConverterNegate x:Key="BoolToVisibilityConverterNegate"/>
+        <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="30,10,30,30">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border CornerRadius="10" Background="#991d1d1d" Height="350" VerticalAlignment="Center">
+            <Grid>
+                <Border Background="Green" CornerRadius="6" Margin="0,5,5,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="90" Height="20">
+                    <Label Padding="0" Content="{Binding UserData.package}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                    <Ellipse Margin="0,20,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Height="100" Width="100">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="{Binding UserData.avatar}" Stretch="UniformToFill"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="{Binding UserNameTitle}"/>
+                        <TextBlock Margin="5,0,0,0" Text="{Binding UserData.username}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="{Binding GenderTitle}"/>
+                        <TextBlock Margin="5,0,0,0" Text="{Binding UserData.gender[1]}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="{Binding MailTitle}"/>
+                        <TextBlock Margin="5,0,0,0" Text="{Binding UserData.email}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="{Binding RegisterDateTitle}"/>
+                        <TextBlock Margin="5,0,0,0" Text="{Binding UserData.register_date}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="{Binding SubscriptionDateTitle}"/>
+                        <TextBlock Margin="5,0,0,0" Text="{Binding UserData.days_left}"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <TextBlock Text="{Binding LanguageTitle}"/>
+                        <ComboBox x:Name="LanguageOption" Margin="5,0,0,0" Height="20" Width="80" FontSize="16" SelectionChanged="{s:Action LanguageChanged}" ItemsSource="{Binding Languages}" SelectedIndex="{Binding SelectedLanguage}"/>
+                    </StackPanel>
+                    <Button BorderThickness="0" Background="Transparent" Foreground="#FFFFFF" Click="{s:Action OnLogoutClick}" Content="{Binding LogoutContent}" Height="30" Width="80" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <Button.Template>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <ContentPresenter x:Name="ButtonContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,0">
+                                    <ContentPresenter.Resources>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+                                            <Setter Property="Effect">
+                                                <Setter.Value>
+                                                    <DropShadowEffect BlurRadius="5" Color="#e91e63" ShadowDepth="0"/>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="FontFamily" Value="pack://application:,,,/Fonts/#Quiza Pro"/>
+                                            <Setter Property="FontSize" Value="14" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button,AncestorLevel=1}, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="Effect">
+                                                        <Setter.Value>
+                                                            <DropShadowEffect BlurRadius="15" Color="#FD9DBE" ShadowDepth="0"/>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Button,AncestorLevel=1}, Path=IsPressed}" Value="True">
+                                                    <Setter Property="FontSize" Value="12"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ContentPresenter.Resources>
+                                </ContentPresenter>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </Grid>            
+        </Border>
+        <StackPanel Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" Grid.Column="1" Height="200" Width="310" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <local:LoadingIndicator SpeedRatio="1" IsActive="{Binding IsLoading}" Foreground="#FFF18BAE" Style="{DynamicResource LoadingIndicatorRingStyleKey}">
+                <local:LoadingIndicator.Effect>
+                    <DropShadowEffect BlurRadius="25" Color="#e91e63" ShadowDepth="0"/>
+                </local:LoadingIndicator.Effect>
+            </local:LoadingIndicator>
+            <TextBlock TextAlignment="Center" Text="{Binding ProcessingText}" Foreground="#FFF18BAE" HorizontalAlignment="Center" Margin="0,14,0,0" FontSize="18">
+                <TextBlock.Effect>
+                    <DropShadowEffect BlurRadius="2" ShadowDepth="2"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        </StackPanel>
+        
+        <Button Grid.Column="1" Width="240" RenderTransformOrigin="0.5, 0.5" Cursor="Hand" VerticalAlignment="Center" FontSize="24" Content="{Binding StartGameContent}" HorizontalAlignment="Center" Click="{s:Action StartGameCommand}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverterNegate}}">
+            <Button.Template >
+                <ControlTemplate TargetType="Button" >
+                    <StackPanel>
+                        <Image Width="200" Source="/DotaHackLoader;component/start_button.png" />
+                        <Label HorizontalAlignment="Center" Grid.Row="1" Content="{TemplateBinding Content}"/>
+                    </StackPanel>                    
+                </ControlTemplate>
+            </Button.Template>
+            <Button.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="RenderTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleX="1" ScaleY="1" />
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonDown">
+                            <BeginStoryboard>
+                                <Storyboard >
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="0.95" Duration="0:0:0.10" />
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="0.95" Duration="0:0:0.10" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonUp">
+                            <BeginStoryboard>
+                                <Storyboard >
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0.95" To="1" Duration="0:0:0.10" />
+                                    <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0.95" To="1" Duration="0:0:0.10" />
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+</UserControl>

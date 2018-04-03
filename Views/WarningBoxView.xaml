@@ -1,0 +1,134 @@
+﻿<UserControl x:Class="DotaHackLoader.Views.WarningBoxView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:s="https://github.com/canton7/Stylet"
+             mc:Ignorable="d"
+             d:DesignHeight="158.133" d:DesignWidth="433">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border Grid.RowSpan="2" Margin="-1" CornerRadius="8" BorderThickness="1" BorderBrush="Red" Opacity="0.7">
+            <Border.Effect>
+                <BlurEffect Radius="8"/>
+            </Border.Effect>
+        </Border>
+        <Border Grid.RowSpan="2" CornerRadius="6" Background="#BB424c98"/>
+        <Border Grid.RowSpan="2" SnapsToDevicePixels="True" x:Name="border" CornerRadius="6" BorderThickness="1" BorderBrush="Tomato" Opacity="0.6">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="2"/>
+            </Border.Effect>
+        </Border>
+        <StackPanel Margin="20,10,20,0" Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Image Width="22" RenderOptions.BitmapScalingMode="HighQuality" Source="/DotaHackLoader;component/notif_icon.png" Margin="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Image.Effect>
+                        <DropShadowEffect BlurRadius="1" Color="Black" ShadowDepth="1"/>
+                    </Image.Effect>
+                </Image>
+                <Label Margin="10,0,0,0" Content="{Binding WarningTitleContent}" Foreground="White" FontSize="17">
+                    <Label.Effect>
+                        <DropShadowEffect BlurRadius="1" Color="Black" ShadowDepth="1"/>
+                    </Label.Effect>
+                </Label>
+            </StackPanel>
+            <TextBlock HorizontalAlignment="Center" Text="{Binding Message}" Foreground="White" FontSize="15" TextWrapping="Wrap">
+                <TextBlock.Effect>
+                    <DropShadowEffect BlurRadius="1" Color="Black" ShadowDepth="1"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        </StackPanel>
+        <StackPanel Margin="0,20,0,10" Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Margin="0,0,8,0" Width="100" Command="{s:Action OkWarning}" Content="ОК" >
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Padding="10" CornerRadius="6" Height="40" Background="#CC49144D" BorderThickness="1" BorderBrush="#AAe91e63">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="11" Color="#000000" Direction="0" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <TextBlock Foreground="White" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding Content}" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                            <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonDown">
+                                <BeginStoryboard>
+                                    <Storyboard >
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="0.95" Duration="0:0:0.10" />
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="0.95" Duration="0:0:0.10" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonUp">
+                                <BeginStoryboard>
+                                    <Storyboard >
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0.95" To="1" Duration="0:0:0.10" />
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0.95" To="1" Duration="0:0:0.10" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button Margin="8,0,0,0" Width="110" Command="{s:Action CancelWarning}" Content="ОТМЕНА">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Padding="10" CornerRadius="6" Height="40" Background="#CC49144D" BorderThickness="1" BorderBrush="#AAe91e63">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="11" Color="#000000" Direction="0" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <TextBlock Foreground="White" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding Content}" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                            <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonDown">
+                                <BeginStoryboard>
+                                    <Storyboard >
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="0.95" Duration="0:0:0.10" />
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="0.95" Duration="0:0:0.10" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonUp">
+                                <BeginStoryboard>
+                                    <Storyboard >
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0.95" To="1" Duration="0:0:0.10" />
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0.95" To="1" Duration="0:0:0.10" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

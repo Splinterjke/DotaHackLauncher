@@ -1,0 +1,202 @@
+﻿<UserControl x:Class="DotaHackLoader.Views.StoreView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:local="clr-namespace:DotaHackLoader.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="521" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#e91e63"/>
+            <Setter Property="CornerRadius" Value="16"/>
+        </Style>
+        <Style x:Key="BorderBodyMainStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="0,0,15,15"/>
+            <Setter Property="Background" Value="#A538113B"/>
+        </Style>
+        <Style x:Key="BorderBodyHeaderStyle" TargetType="Border">
+            <Setter Property="CornerRadius" Value="15,15,0,0"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="2" Direction="-90" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ClassicFeatureStyle" TargetType="Label" BasedOn="{StaticResource {x:Type Label}}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="Foreground" Value="#FFA5E9FF"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FF54FBF3" BlurRadius="15" ShadowDepth="0"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="BloodBathFeatureStyle" TargetType="Label" BasedOn="{StaticResource ClassicFeatureStyle}">
+            <Setter Property="Foreground" Value="#FFAFB9FF"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FF4FB7FF" BlurRadius="15" ShadowDepth="0"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SuperbFeatureStyle" TargetType="Label" BasedOn="{StaticResource ClassicFeatureStyle}">
+            <Setter Property="Foreground" Value="#FF3DACA6"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="#FF00DACB" BlurRadius="15" ShadowDepth="0"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="0,4,0,0" HorizontalAlignment="Center">        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Image Grid.ColumnSpan="3" Source="{Binding AntivacSource}" VerticalAlignment="Top" HorizontalAlignment="Center" Width="390" />
+        <Grid Grid.ColumnSpan="3" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid Width="250" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border Style="{StaticResource BorderStyle}" BorderBrush="#9C27B0" Margin="-1">
+                    <Border.Effect>
+                        <BlurEffect Radius="10"/>
+                    </Border.Effect>
+                </Border>
+                <Border Style="{StaticResource BorderStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Border Background="#882FA0C2" Style="{StaticResource BorderBodyHeaderStyle}">
+                            <TextBlock FontSize="32" Text="CLASSIC" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Row="1" Style="{StaticResource BorderBodyMainStyle}"/>
+                        <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Label HorizontalAlignment="Center" Margin="0,5,0,0" FontSize="32" Content="{Binding ClassicPrice}">
+                                <Label.Effect>
+                                    <DropShadowEffect Color="#FF54FBF3" BlurRadius="20" ShadowDepth="0" Direction="-90"/>
+                                </Label.Effect>
+                            </Label>
+                            <Label Margin="0,10,0,0" Style="{StaticResource ClassicFeatureStyle}" Content="SHOW COOLDOWNS"/>
+                            <Label Style="{StaticResource ClassicFeatureStyle}" Content="CAMERA HACK"/>
+                            <Label Style="{StaticResource ClassicFeatureStyle}" Content="SHOW ITEMS"/>
+                            <Label FontSize="17" Padding="4" Foreground="#FFFFFF" Opacity="0.5" HorizontalAlignment="Center" Content="ANTI COUR FEED"/>
+                            <Label FontSize="17" Padding="4" Foreground="#FFFFFF" Opacity="0.5" HorizontalAlignment="Center" Content="AUTO COMBO"/>
+                            <Label FontSize="17" Padding="4" Foreground="#FFFFFF" Opacity="0.5" HorizontalAlignment="Center" Content="AUTO DODGE"/>
+                            <Label FontSize="17" Padding="4" Foreground="#FFFFFF" Opacity="0.5" HorizontalAlignment="Center" Content="AUTO STEALER"/>
+                            <Label FontSize="17" Padding="4" Foreground="#FFFFFF" Opacity="0.5" HorizontalAlignment="Center" Content="VISIBLE BY ENEMY"/>
+                            <Label FontSize="17" Padding="4" Foreground="#FFFFFF" Opacity="0.5" HorizontalAlignment="Center" Content="AUTO DISABLE"/>
+                            <Label FontSize="17" Padding="4" Foreground="#FFFFFF" Opacity="0.5" HorizontalAlignment="Center" Content="MAP HACK"/>
+                            <Label PreviewMouseLeftButtonDown="{s:Action ClassicLink}" Margin="0,10,0,0" FontSize="42" Cursor="Hand" Content="{Binding BuyButtonText}" HorizontalAlignment="Center">
+                                <Label.Effect>
+                                    <DropShadowEffect Color="#FF54ECFB" BlurRadius="15" ShadowDepth="0"/>
+                                </Label.Effect>
+                            </Label>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid Width="250" Grid.Column="1" Margin="70,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border Style="{StaticResource BorderStyle}" BorderBrush="#9C27B0" Margin="-1">
+                    <Border.Effect>
+                        <BlurEffect Radius="10"/>
+                    </Border.Effect>
+                </Border>
+                <Border Style="{StaticResource BorderStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Border Background="#88424c98" Style="{StaticResource BorderBodyHeaderStyle}">
+                            <TextBlock FontSize="32" Text="SUPERB" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Row="1" Style="{StaticResource BorderBodyMainStyle}"/>
+                        <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Label HorizontalAlignment="Center" Margin="0,5,0,0" FontSize="32" Content="{Binding SuperbPrice}">
+                                <Label.Effect>
+                                    <DropShadowEffect Color="#FF737ED1" BlurRadius="20" ShadowDepth="0" Direction="-90"/>
+                                </Label.Effect>
+                            </Label>
+                            <Label Margin="0,10,0,0" Style="{StaticResource BloodBathFeatureStyle}" Content="SHOW COOLDOWNS"/>
+                            <Label Style="{StaticResource BloodBathFeatureStyle}" Content="CAMERA HACK"/>
+                            <Label Style="{StaticResource BloodBathFeatureStyle}" Content="SHOW ITEMS"/>
+                            <Label Style="{StaticResource BloodBathFeatureStyle}" Content="ANTI COUR FEED"/>
+                            <Label Style="{StaticResource BloodBathFeatureStyle}" Content="AUTO COMBO"/>
+                            <Label Style="{StaticResource BloodBathFeatureStyle}" Content="AUTO DODGE"/>
+                            <Label Style="{StaticResource BloodBathFeatureStyle}" Content="AUTO STEALER"/>
+                            <Label FontSize="17" Padding="4" Foreground="#FFFFFF" Opacity="0.5" HorizontalAlignment="Center" Content="VISIBLE BY ENEMY"/>
+                            <Label FontSize="17" Padding="4" Foreground="#FFFFFF" Opacity="0.5" HorizontalAlignment="Center" Content="AUTO DISABLE"/>
+                            <Label FontSize="17" Padding="4" Foreground="#FFFFFF" Opacity="0.5" HorizontalAlignment="Center" Content="MAP HACK"/>
+                            <Label PreviewMouseLeftButtonDown="{s:Action SuperbLink}" Margin="0,10,0,0" FontSize="42" Cursor="Hand" Content="{Binding BuyButtonText}" HorizontalAlignment="Center">
+                                <Label.Effect>
+                                    <DropShadowEffect Color="#4FB7FF" BlurRadius="15" ShadowDepth="0" Direction="-90"/>
+                                </Label.Effect>
+                            </Label>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+            <Grid Width="250" Grid.Column="2" Margin="70,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border Style="{StaticResource BorderStyle}" BorderBrush="#9C27B0" Margin="-1">
+                    <Border.Effect>
+                        <BlurEffect Radius="10"/>
+                    </Border.Effect>
+                </Border>
+                <Border Style="{StaticResource BorderStyle}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Border Background="#881f6966" Style="{StaticResource BorderBodyHeaderStyle}">
+                            <TextBlock FontSize="32" Text="BLOODBATH" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                        <Border Grid.Row="1" Style="{StaticResource BorderBodyMainStyle}"/>
+                        <StackPanel Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Label HorizontalAlignment="Center" Margin="0,5,0,0" FontSize="32" Content="{Binding BloodBathPrice}">
+                                <Label.Effect>
+                                    <DropShadowEffect Color="#FF00DACB" BlurRadius="20" ShadowDepth="0" Direction="-90"/>
+                                </Label.Effect>
+                            </Label>
+                            <Label Margin="0,10,0,0" Style="{StaticResource SuperbFeatureStyle}" Content="SHOW COOLDOWNS"/>
+                            <Label Style="{StaticResource SuperbFeatureStyle}" Content="CAMERA HACK"/>
+                            <Label Style="{StaticResource SuperbFeatureStyle}" Content="SHOW ITEMS"/>
+                            <Label Style="{StaticResource SuperbFeatureStyle}" Content="ANTI COUR FEED"/>
+                            <Label Style="{StaticResource SuperbFeatureStyle}" Content="AUTO COMBO"/>
+                            <Label Style="{StaticResource SuperbFeatureStyle}" Content="AUTO DODGE"/>
+                            <Label Style="{StaticResource SuperbFeatureStyle}" Content="AUTO STEALER"/>
+                            <Label Style="{StaticResource SuperbFeatureStyle}" Content="VISIBLE BY ENEMY"/>
+                            <Label Style="{StaticResource SuperbFeatureStyle}" Content="AUTO DISABLE"/>
+                            <Label Style="{StaticResource SuperbFeatureStyle}" Content="MAP HACK"/>
+                            <Label PreviewMouseLeftButtonDown="{s:Action BloodbathLink}" Margin="0,10,0,0" Cursor="Hand" FontSize="42" Content="{Binding BuyButtonText}" HorizontalAlignment="Center">
+                                <Label.Effect>
+                                    <DropShadowEffect Color="#FF00DACB" BlurRadius="15" ShadowDepth="0" Direction="-90"/>
+                                </Label.Effect>
+                            </Label>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,323 @@
+﻿<UserControl x:Class="DotaHackLoader.Views.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:s="https://github.com/canton7/Stylet"
+             xmlns:local="clr-namespace:DotaHackLoader.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="785" d:DesignWidth="986.5">
+    <UserControl.Resources>
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Width" Value="280"/>
+            <Setter Property="Height" Value="160"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="11" Color="#000000" Direction="0" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="0.95" ScaleY="0.95" />
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Border.MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard >
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0.95" To="1.05" Duration="0:0:0.10" />
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0.95" To="1.05" Duration="0:0:0.10" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Border.MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard >
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="0.95" Duration="0:0:0.10" />
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="0.95" Duration="0:0:0.10" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="OverToggleBorderStyle" TargetType="Border">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Border,AncestorLevel=1}, Path=IsMouseOver}" Value="True">
+                    <Setter Property="Visibility" Value="Hidden" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="OverToggleMEStyle" TargetType="MediaElement">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Border,AncestorLevel=1}, Path=IsMouseOver}" Value="False">
+                    <Setter Property="LoadedBehavior" Value="Pause"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="OverlayBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#55000000"/>
+            <Setter Property="Height" Value="20"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Border,AncestorLevel=1}, Path=IsMouseOver}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard >
+                                <DoubleAnimation Storyboard.TargetProperty="Height" From="20" To="157" Duration="0:0:0.3" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="OverlayStackPanelStyle" TargetType="StackPanel">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Border,AncestorLevel=1}, Path=IsMouseOver}" Value="True">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard >
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin" BeginTime="00:00:00">
+                                    <SplineThicknessKeyFrame KeyTime="00:00:00" Value="0,30,0,0" />
+                                    <SplineThicknessKeyFrame KeyTime="00:00:00.3" Value="0,0,0,0" />
+                                </ThicknessAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="HorizontalDivider" TargetType="Separator">
+            <Setter Property="Margin" Value="10,10,10,0"/>
+            <Setter Property="Background" Value="#99e91e63"/>
+            <Setter Property="Width" Value="Auto"/>
+        </Style>
+        <Style x:Key="FeatureDescription" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Margin" Value="10,5,10,0"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer Margin="0,10,0,20" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Border Style="{StaticResource BorderStyle}">
+                <Grid>                    
+                    <MediaElement Source="http://dotameat.com/content/MapHack.mp4" Style="{StaticResource OverToggleMEStyle}" MediaEnded="{s:Action RepeatPreview}"/>
+                    <Border Name="tempname" Style="{StaticResource OverlayBorderStyle}"/>
+                    <StackPanel Style="{StaticResource OverlayStackPanelStyle}">
+                        <CheckBox IsEnabled="{Binding IsMapHackAvailable}" IsChecked="{Binding IsMapHackEnabled}" Content="MAPHACK" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Separator Style="{StaticResource HorizontalDivider}"/>
+                        <TextBlock Text="{Binding MapHackDescription}" Style="{StaticResource FeatureDescription}"/>
+                    </StackPanel>
+                    <Border Style="{StaticResource OverToggleBorderStyle}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="http://dotameat.com/content/Maphack.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Border Height="60" Background="#99000000">
+                            <TextBlock Text="MAPHACK" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1" Style="{StaticResource BorderStyle}">
+                <Grid>
+                    <MediaElement Source="http://dotameat.com/content/VisibleByEnemy.mp4" Style="{StaticResource OverToggleMEStyle}" MediaEnded="{s:Action RepeatPreview}"/>
+                    <Border Style="{StaticResource OverlayBorderStyle}"/>
+                    <StackPanel>
+                        <CheckBox IsEnabled="{Binding IsVisibleByEnemyAvailable}" IsChecked="{Binding IsVisibleByEnemyEnabled}" Content="VISIBLE BY ENEMY" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Separator Style="{StaticResource HorizontalDivider}"/>
+                        <TextBlock Text="{Binding VisibleByEnemyDescription}" Style="{StaticResource FeatureDescription}"/>
+                    </StackPanel>
+                    <Border Style="{StaticResource OverToggleBorderStyle}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="http://dotameat.com/content/VisibleByEnemy.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Border Height="60" Background="#99000000">
+                            <TextBlock Text="VISIBLE BY ENEMY" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Border>
+
+
+            <Border Grid.Column="2" Style="{StaticResource BorderStyle}">
+                <Grid>                    
+                    <MediaElement Source="http://dotameat.com/content/AutoDisable.mp4" Style="{StaticResource OverToggleMEStyle}" MediaEnded="{s:Action RepeatPreview}"/>
+                    <Border Style="{StaticResource OverlayBorderStyle}"/>
+                    <StackPanel>
+                        <CheckBox IsEnabled="{Binding IsAutoDisableAvailable}" IsChecked="{Binding IsAutoDisableEnabled}" Content="AUTO DISABLE" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Separator Style="{StaticResource HorizontalDivider}"/>
+                        <TextBlock Text="{Binding AutoDisableDescription}" Style="{StaticResource FeatureDescription}"/>
+                    </StackPanel>
+                    <Border Style="{StaticResource OverToggleBorderStyle}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="http://dotameat.com/content/AutoDisable.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Border Height="60" Background="#99000000">
+                            <TextBlock Text="AUTO DISABLE" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Style="{StaticResource BorderStyle}">
+                <Grid>
+                    <MediaElement Source="http://dotameat.com/content/ShowCooldowns.mp4" Style="{StaticResource OverToggleMEStyle}" MediaEnded="{s:Action RepeatPreview}"/>
+                    <Border Style="{StaticResource OverlayBorderStyle}"/>
+                    <StackPanel>
+                        <CheckBox IsEnabled="{Binding IsShowCooldownsAvailable}" IsChecked="{Binding IsShowCooldownsEnabled}" Content="SHOW COOLDOWNS" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Separator Style="{StaticResource HorizontalDivider}"/>
+                        <TextBlock Text="{Binding ShowCooldownsDescription}" Style="{StaticResource FeatureDescription}"/>
+                    </StackPanel>
+                    <Border Style="{StaticResource OverToggleBorderStyle}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="http://dotameat.com/content/ShowCooldowns.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Border Height="60" Background="#99000000">
+                            <TextBlock Text="SHOW COOLDOWNS" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource BorderStyle}">
+                <Grid>
+                    <MediaElement Source="http://dotameat.com/content/AutoDodge.mp4" Style="{StaticResource OverToggleMEStyle}" MediaEnded="{s:Action RepeatPreview}"/>
+                    <Border Style="{StaticResource OverlayBorderStyle}"/>
+                    <StackPanel>
+                        <CheckBox IsEnabled="{Binding IsAutoDodgeAvailable}" IsChecked="{Binding IsAutoDodgeEnabled}" Content="AUTO DODGE" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Separator Style="{StaticResource HorizontalDivider}"/>
+                        <TextBlock Text="{Binding AutoDodgeDescription}" Style="{StaticResource FeatureDescription}"/>
+                    </StackPanel>
+                    <Border Style="{StaticResource OverToggleBorderStyle}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="http://dotameat.com/content/AutoDodge.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Border Height="60" Background="#99000000">
+                            <TextBlock Text="AUTO DODGE" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource BorderStyle}">
+                <Grid>
+                    <MediaElement Source="http://dotameat.com/content/ShowItems.mp4" Style="{StaticResource OverToggleMEStyle}" MediaEnded="{s:Action RepeatPreview}"/>
+                    <Border Style="{StaticResource OverlayBorderStyle}"/>
+                    <StackPanel>
+                        <CheckBox IsEnabled="{Binding IsShowItemsAvailable}" IsChecked="{Binding IsShowItemsEnabled}" Content="SHOW ITEMS" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Separator Style="{StaticResource HorizontalDivider}"/>
+                        <TextBlock Text="{Binding ShowItemsDescription}" Style="{StaticResource FeatureDescription}"/>
+                    </StackPanel>
+                    <Border Style="{StaticResource OverToggleBorderStyle}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="http://dotameat.com/content/ShowItems.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Border Height="60" Background="#99000000">
+                            <TextBlock Text="SHOW ITEMS" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="2" Style="{StaticResource BorderStyle}">
+                <Grid>
+                    <MediaElement Source="http://dotameat.com/content/AutoSteal.mp4" Style="{StaticResource OverToggleMEStyle}" MediaEnded="{s:Action RepeatPreview}"/>
+                    <Border Style="{StaticResource OverlayBorderStyle}"/>
+                    <StackPanel>
+                        <CheckBox IsEnabled="{Binding IsAutoStealerAvailable}" IsChecked="{Binding IsAutoStealerEnabled}" Content="AUTO STEAL" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Separator Style="{StaticResource HorizontalDivider}"/>
+                        <TextBlock Text="{Binding AutoStealerDescription}" Style="{StaticResource FeatureDescription}"/>
+                    </StackPanel>
+                    <Border Style="{StaticResource OverToggleBorderStyle}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="http://dotameat.com/content/AutoSteal.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Border Height="60" Background="#99000000">
+                            <TextBlock Text="AUTO STEAL" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource BorderStyle}">
+                <Grid>
+                    <MediaElement Source="http://dotameat.com/content/AntiCourFeed.mp4" Style="{StaticResource OverToggleMEStyle}" MediaEnded="{s:Action RepeatPreview}"/>
+                    <Border Style="{StaticResource OverlayBorderStyle}"/>
+                    <StackPanel>
+                        <CheckBox IsEnabled="{Binding IsAntiCourFeedAvailable}" IsChecked="{Binding IsAntiCourFeedEnabled}" Content="ANTI COUR FEED" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                        <Separator Style="{StaticResource HorizontalDivider}"/>
+                        <TextBlock Text="{Binding AntiCourFeedDescription}" Style="{StaticResource FeatureDescription}"/>
+                    </StackPanel>
+                    <Border Style="{StaticResource OverToggleBorderStyle}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="http://dotameat.com/content/AntiCourFeed.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Border Height="60" Background="#99000000">
+                            <TextBlock Text="ANTI COUR FEED" FontSize="28" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="2" Grid.Column="3" Style="{StaticResource BorderStyle}">
+                <Grid>
+                    <MediaElement Source="http://dotameat.com/content/Combo.mp4" Style="{StaticResource OverToggleMEStyle}" MediaEnded="{s:Action RepeatPreview}"/>
+                    <Border Style="{StaticResource OverlayBorderStyle}"/>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="10,10,0,0" VerticalAlignment="Top">
+                            <TextBox IsEnabled="{Binding IsAutoComboAvailable}" FontSize="14" CaretBrush="White" Padding="0" Height="24" BorderBrush="White" Background="{x:Null}" Width="24" TextAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxLength="1"/>
+                            <TextBlock FontSize="18" Text="COMBO KEY" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Separator Style="{StaticResource HorizontalDivider}"/>
+                        <TextBlock Text="{Binding AutoComboDescription}" Style="{StaticResource FeatureDescription}"/>
+                    </StackPanel>
+                    <Border Style="{StaticResource OverToggleBorderStyle}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="http://dotameat.com/content/Combo.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Border Height="60" Background="#99000000">
+                            <TextBlock Text="AUTO COMBO" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="3" Grid.Column="1" Style="{StaticResource BorderStyle}">
+                <Grid>
+                    <MediaElement Source="http://dotameat.com/content/CameraHack.mp4" Style="{StaticResource OverToggleMEStyle}" MediaEnded="{s:Action RepeatPreview}"/>
+                    <Border Style="{StaticResource OverlayBorderStyle}"/>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="10,10,0,0" VerticalAlignment="Top">
+                            <TextBox IsEnabled="{Binding IsCameraHackAvailable}" FontSize="14" CaretBrush="White" Padding="0" Background="{x:Null}" BorderBrush="White" Height="24" Width="40" TextAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxLength="4"/>
+                            <TextBlock FontSize="18" Text="CAMERA DISTANCE" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Separator Style="{StaticResource HorizontalDivider}"/>
+                        <TextBlock Text="{Binding CameraHackDescription}" Style="{StaticResource FeatureDescription}"/>
+                    </StackPanel>
+                    <Border Style="{StaticResource OverToggleBorderStyle}">
+                        <Border.Background>
+                            <ImageBrush ImageSource="http://dotameat.com/content/CameraHack.jpg" Stretch="UniformToFill"/>
+                        </Border.Background>
+                        <Border Height="60" Background="#99000000">
+                            <TextBlock Text="ZOOM HACK" FontSize="32" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

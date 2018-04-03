@@ -1,0 +1,166 @@
+﻿<UserControl x:Class="DotaHackLoader.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:DotaHackLoader.Services"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:DotaHackLoader.Behaviors"
+             xmlns:converter="clr-namespace:DotaHackLoader.Converters"
+             xmlns:s="https://github.com/canton7/Stylet"
+             mc:Ignorable="d" 
+             d:DesignHeight="502.667" d:DesignWidth="300">
+    <UserControl.Resources>        
+        <Style x:Key="BorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="#BB2D2D2D"/>
+            <Setter Property="CornerRadius" Value="6"/>
+            <Setter Property="BorderBrush" Value="#AAe91e63"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="11" Color="#000000" Direction="0" ShadowDepth="0"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="0,40,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Text="DOTA MEAT" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="64">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="#BB854393" ShadowDepth="3" BlurRadius="2" Direction="220"/>
+                </TextBlock.Effect>
+            </TextBlock>
+            <TextBlock Margin="0,10,0,0" Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="44">
+                <TextBlock.Effect>
+                    <DropShadowEffect Color="#BB854393" ShadowDepth="3" BlurRadius="2" Direction="220"/>
+                </TextBlock.Effect>
+            </TextBlock>
+        </StackPanel>
+        
+        <StackPanel Grid.Row="1" Width="250" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Border IsEnabled="{Binding IsNotProcessing}" x:Name="Login" Style="{StaticResource BorderStyle}">
+                <AdornerDecorator>
+                    <TextBox PreviewKeyDown="{s:Action KeyDown}" CaretBrush="White" FontSize="15" Background="Transparent" BorderThickness="0" Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}">
+                        <TextBox.Resources>
+                            <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.Target="{x:Reference Login}" Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.05" Duration="0:0:0.10" />
+                                                    <DoubleAnimation Storyboard.Target="{x:Reference Login}" Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.05" Duration="0:0:0.10" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.Target="{x:Reference Login}" Storyboard.TargetProperty="RenderTransform.ScaleX" From="1.05" To="1" Duration="0:0:0.10" />
+                                                    <DoubleAnimation Storyboard.Target="{x:Reference Login}" Storyboard.TargetProperty="RenderTransform.ScaleY" From="1.05" To="1" Duration="0:0:0.10" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Resources>
+                        <controls:WatermarkService.Watermark>
+                            <TextBlock FontSize="15" Text="Login" Margin="3,0,0,0"/>
+                        </controls:WatermarkService.Watermark>
+                    </TextBox>
+                </AdornerDecorator>
+            </Border>
+            <Border IsEnabled="{Binding IsNotProcessing}" x:Name="Password" Margin="0,10,0,0" Style="{StaticResource BorderStyle}">
+                <AdornerDecorator>
+                    <PasswordBox PreviewKeyDown="{s:Action KeyDown}" CaretBrush="White" FontSize="15" Background="Transparent" BorderThickness="0" IsEnabled="True">
+                        <PasswordBox.Resources>
+                            <Style TargetType="PasswordBox" BasedOn="{StaticResource {x:Type PasswordBox}}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.Target="{x:Reference Password}" Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="1.05" Duration="0:0:0.10" />
+                                                    <DoubleAnimation Storyboard.Target="{x:Reference Password}" Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="1.05" Duration="0:0:0.10" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.Target="{x:Reference Password}" Storyboard.TargetProperty="RenderTransform.ScaleX" From="1.05" To="1" Duration="0:0:0.10" />
+                                                    <DoubleAnimation Storyboard.Target="{x:Reference Password}" Storyboard.TargetProperty="RenderTransform.ScaleY" From="1.05" To="1" Duration="0:0:0.10" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </PasswordBox.Resources>
+                        <controls:WatermarkService.Watermark>
+                            <TextBlock FontSize="15" Text="Password" Margin="3,0,0,0"/>
+                        </controls:WatermarkService.Watermark>
+                        <i:Interaction.Behaviors>
+                            <behaviors:PasswordBehavior Password="{Binding Password}" />
+                        </i:Interaction.Behaviors>
+                    </PasswordBox>
+                </AdornerDecorator>
+            </Border>
+            <Button RenderTransformOrigin="0.5, 0.5" Margin="0,10,0,0" Content="{Binding LoginButtonText}" Command="{s:Action LoginCommand}">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="6" Height="40" Background="#CC49144D" BorderThickness="1" BorderBrush="#AAe91e63">
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="11" Color="#000000" Direction="0" ShadowDepth="0"/>
+                            </Border.Effect>                            
+                            <TextBlock FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{TemplateBinding Content}" />
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="RenderTransform">
+                            <Setter.Value>
+                                <ScaleTransform ScaleX="1" ScaleY="1" />
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                            <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonDown">
+                                <BeginStoryboard>
+                                    <Storyboard >
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="0.95" Duration="0:0:0.10" />
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="1" To="0.95" Duration="0:0:0.10" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonUp">
+                                <BeginStoryboard>
+                                    <Storyboard >
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0.95" To="1" Duration="0:0:0.10" />
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleY" From="0.95" To="1" Duration="0:0:0.10" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <CheckBox Margin="0,10,0,0" FontSize="14" IsChecked="{Binding IsAuthSaved}" Content="{Binding RememberText}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

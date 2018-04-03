@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="DotaHackLoader.Views.ErrorBoxView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:s="https://github.com/canton7/Stylet"
+             mc:Ignorable="d"
+             d:DesignHeight="65.466" d:DesignWidth="433">
+    <UserControl.Resources>
+        <Image x:Key="CloseButton" Source="/DotaHackLoader;component/cancel_icon.png"/>
+        <Style x:Key="CloseBoxButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Height" Value="15"/>
+            <Setter Property="Width" Value="15"/>
+            <Setter Property="Opacity" Value="0.3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Opacity" Value="0.8"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                        <Border Background="Transparent">
+                            <ContentPresenter />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.ColumnSpan="2" Margin="-1" CornerRadius="8" BorderThickness="1" BorderBrush="Red" Opacity="0.7">
+            <Border.Effect>
+                <BlurEffect Radius="8"/>
+            </Border.Effect>
+        </Border>
+        <Border Grid.ColumnSpan="2" CornerRadius="6" Background="#BB424c98"/>
+        <Border SnapsToDevicePixels="True" x:Name="border" Grid.ColumnSpan="2" CornerRadius="6" BorderThickness="1" BorderBrush="Tomato" Opacity="0.6">
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="0" BlurRadius="2"/>
+            </Border.Effect>
+        </Border>
+        <Image RenderOptions.BitmapScalingMode="HighQuality" Source="/DotaHackLoader;component/notif_icon.png" Margin="15" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image.Effect>
+                <DropShadowEffect BlurRadius="1" Color="Black" ShadowDepth="1"/>
+            </Image.Effect>
+        </Image>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,10,15,10">
+            <StackPanel Margin="0,0,20,0">
+                <Label Padding="0,0,0,5" Content="{Binding ErrorTitleContent}" Foreground="White" FontSize="16">
+                    <Label.Effect>
+                        <DropShadowEffect BlurRadius="1" Color="Black" ShadowDepth="1"/>
+                    </Label.Effect>
+                </Label>
+                <TextBlock Padding="0" Text="{Binding Message}" Foreground="White" FontSize="13" MaxWidth="200" TextWrapping="Wrap">
+                    <TextBlock.Effect>
+                        <DropShadowEffect BlurRadius="1" Color="Black" ShadowDepth="1"/>
+                    </TextBlock.Effect>
+                </TextBlock>
+            </StackPanel>
+            <Button Style="{StaticResource CloseBoxButtonStyle}" Content="{StaticResource CloseButton}" Command="{s:Action CloseWithSuccess}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
